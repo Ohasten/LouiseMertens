@@ -1,0 +1,38 @@
+.nav-master {
+    height: 100vh;
+    width: 5vw;
+    background-color: red;
+
+    position: fixed;
+    right: 0;
+
+    padding-top: 5vh;
+}
+
+.nav-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+
+    margin-bottom: 10vh;
+}
+
+.nav-element {
+    writing-mode: vertical-lr;
+    margin: 0 auto;
+}
+
+.nav-off {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+#nav-louise {
+    height: 14ch;
+}
+
+#nav-cata {
+    opacity: 0;
+    pointer-events: none;
+}

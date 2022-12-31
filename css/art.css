@@ -1,0 +1,34 @@
+
+#art-container {
+    display: flex;
+}
+
+#art-left-master {
+    width: 45vw;
+    background-color: red;
+}
+
+#art-right-master {
+    width: 50vw;
+    background-color: aquamarine;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.art-left-container-image {
+    height: 100vh;
+}
+
+.art-left-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.art-right-image {
+    width: 100%;
+
+    flex: 0 0 auto;
+}

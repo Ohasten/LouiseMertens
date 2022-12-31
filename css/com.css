@@ -1,0 +1,70 @@
+.com-section {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.com-master {
+    width: 45vw;
+    height: 100%;
+}
+
+.com-container-image {
+    width: 100%;
+    height: 100%; 
+}
+
+.com-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.com-container-text {
+    background-color: bisque;
+
+    width: 50vw;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: var(--spacing-size-m);
+    padding-left: var(--spacing-size-m);
+
+    margin: auto 0 auto 0;
+}
+
+.com-text-description {
+    background-color: aquamarine;
+    width: 30%;
+}
+
+.com-text-details {
+    background-color: violet;
+}
+
+/* SPLIDE */
+.splide__arrows {
+    z-index: 99;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    position: absolute;
+
+    /* DESIGN OF IT */
+    opacity: 0;
+}
+
+.splide__arrow  {
+    flex: 1 0 content;
+}
+
+.splide__arrow--next:hover {
+    cursor: e-resize;
+}
+
+.splide__arrow--prev:hover {
+    cursor: w-resize;
+}
