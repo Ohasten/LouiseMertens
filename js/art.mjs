@@ -2,7 +2,30 @@ export function artMain(artworks) {
     if(databaseArt.length <= 0) {
         getArtworkData(artworks)
     }
-    addContent();
+
+    addContent()
+    loopBigImg()
+    randomArt()
+
+
+}
+
+export function randomArt() {
+    /* SIZING IMAGES */
+    var minWidth = 50;
+    var maxWidth = 100;
+    var minHeight = 40;
+    var maxHeight = 60;
+    var minTop = 0;
+    var maxTop = 10;
+    var minRight = 0;
+    var maxRight = 0;
+    var minBottom = 0;
+    var maxBottom = 6;
+    var minLeft = 0;
+    var maxLeft = 40;
+
+    randomImg( minWidth, maxWidth, minHeight, maxHeight, minTop, maxTop, minRight, maxRight, minBottom, maxBottom, minLeft, maxLeft);
 }
 
 var getArtworkData = function(v){
@@ -51,12 +74,9 @@ var addContent = function() {
 
         /* START ADD CONTENT TO DOM */
     
-
-
-        // GET LEFT IMAGE
+        // ADD LEFT IMAGE
         if(v.images[0].__component === "left.image-left") {
             $(leftMasterId).append(leftContainerImageDiv);
-
 
             var leftImageClass = "art-left-image";
 
@@ -66,7 +86,7 @@ var addContent = function() {
             }).addClass(leftImageClass))
         }
          
-        // GET RIGHT IMAGES
+        // ADD RIGHT IMAGES
         if(v.images[0].__component === "right.image-right") {
             var rightImageClass = "art-right-image";
 
@@ -85,4 +105,122 @@ var addContent = function() {
         } 
     });
 
+
+
 };
+
+var loopBigImg = function() {
+
+    $().ready(function(){
+        var leftMasterId = "#art-left-master";
+        var rightMasterId = `#art-right-master`;
+    
+        var getLeft = parseInt($(leftMasterId).css("height"))
+        var getRight = parseInt($(rightMasterId).css("height"))
+        
+        if(getLeft < getRight) {    
+            var exContainer = $(".art-left-container-image");
+            var exContainerLength = $(".art-left-container-image").length;
+            var exContainerCounter = 0;
+            
+            var getAddedSize = getLeft;
+            while (getAddedSize < getRight){
+                getAddedSize += parseInt($(".art-left-container-image").css("height"))
+                
+                $(leftMasterId).append(exContainer[exContainerCounter].outerHTML)
+                exContainerCounter++;
+                if(exContainerCounter >= exContainerLength) {
+                    exContainerCounter = 0
+                }
+            }
+    
+        }
+    })
+
+}
+
+var randomImg = function(minW, maxW, minH, maxH, minT, maxT, minR, maxR, minB, maxB, minL, maxL) {
+
+    function getImages() {
+        var imageSelector = ".art-right-container-image";
+        var images = $(imageSelector)
+        var imagesArr = [];
+    
+        for(let i = 0; i < images.length; i++){
+            imagesArr.push( images[i].id )
+        }
+
+        return imagesArr;
+    }
+
+    function getImageSize(minW, maxW, minH, maxH, minT, maxT, minR, maxR, minB, maxB, minL, maxL) {
+
+        function getRandomBetween(min, max) {
+            return Math.round( (Math.random() * (max - min + 1) + min) )
+        }
+
+        var calcWidth = getRandomBetween(minW, maxW);
+        var calcHeight = getRandomBetween(minH, maxH);
+        var calcTop = getRandomBetween(minT, maxT);
+        var calcRight = getRandomBetween(minR, maxR);
+        var calcBottom = getRandomBetween(minB, maxB);
+        var calcLeft = getRandomBetween(minL, maxL);
+
+        return {
+            width: calcWidth,
+            height: calcHeight,
+            top: calcTop,
+            right: calcRight,
+            bottom: calcBottom,
+            left: calcLeft,
+        }
+    }
+
+    function randomMinus() {
+
+        var x;
+        var y = Math.random()
+
+        if(y < 0.75) {
+            x = "";
+        } else {
+            x = "-";
+        }
+
+        return x;
+    }
+
+    getImages().forEach(v => {
+
+        var size = getImageSize(minW, maxW, minH, maxH, minT, maxT, minR, maxR, minB, maxB, minL, maxL);
+
+        $(`#${v}`).css({
+            "width": size.width + "%",
+            "height": size.height + "vh",
+            "margin-top": "0vh",
+            "margin-right": size.right + "%",
+            "margin-left": size.left + "%",
+            "margin-bottom": randomMinus() + size.bottom + "vh",
+        })
+
+        // FOR FIRST IMAGE
+        if(v = "art-right-container-image-0"){
+            var s;
+
+            switch(size.top){
+                case 0: s = 0; break;
+                case 1: s = 0; break;
+                case 2: s = 0; break;
+                case 3: s = 0; break;
+                default: s = size.top; 
+            }
+
+            $(`#${v}`).css({
+                "margin-top": s + "vh",
+            })
+        }
+        
+    });
+
+
+}

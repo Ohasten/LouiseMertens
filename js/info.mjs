@@ -1,7 +1,16 @@
 export function infoMain(info) {
 
     addContent( getInfoData(info) )
+    addAccordion()
+}
 
+export function randomInfo() {
+    var minWidth = 80;
+    var maxWidth = 100;
+    var minHeight = 80;
+    var maxHeight = 100;
+
+    randomImg(minWidth, maxWidth, minHeight, maxHeight);
 }
 
 var getInfoData = function(v) {
@@ -30,13 +39,16 @@ var addContent = function(e) {
     var infoImageContainerDiv = `<div id="info-image-container"></div>`
     var infoImageContainerId = `#info-image-container`
 
+    var infoImageDividerContainerDiv = `<div class="info-image-divider-container"></div>`
+    var infoImageDividerContainerClass = `.info-image-divider-container`
+
     var infoImageOne = `info-image-one` 
     var infoImageTwo = `info-image-two`
 
     var infoTextContainerDiv = `<div id="info-text-container"></div>`
     var infoTextContainerId = `#info-text-container`
 
-    var infoTextMailDiv = `<div id="info-text-mail"> ${e.mailAdress} </div>`
+    var infoTextMailDiv = `<div id="info-text-mail">  <a href="mailto:${e.mailAdress}"> ${e.mailAdress} </a></div>`
     var infoTextMailId = `#info-text-mail`
 
     var infoTextDescriptionDiv = `<div id="info-text-description"> ${e.description} </div>`
@@ -98,7 +110,10 @@ var addContent = function(e) {
     $(infoImageContainerId).append($(`<img>`, { 
         src: "https://louise-mertens-cms.kolbgrafik.de/" + e.imageTwo,
     }).addClass(infoImageTwo))
-    
+
+    $(`.${infoImageOne}`).wrap(infoImageDividerContainerDiv);
+    $(`.${infoImageTwo}`).wrap(infoImageDividerContainerDiv);
+
 
     $(infoTextContainerId).append(infoTextMailDiv)
     $(infoTextContainerId).append(infoTextDescriptionDiv)    
@@ -121,4 +136,108 @@ var addContent = function(e) {
     $(infoContainerPublicationsId).append(infoTextPublicationsDiv)
     $(infoContainerStudiesId).append(infoHeadlineStudiesDiv)
     $(infoContainerStudiesId).append(infoTextStudiesDiv)
+}
+
+var addAccordion = function() {
+
+    var infoContainerTopId = `#info-container-top`
+    var infoContainerBotId = `#info-container-bot`
+
+    var infoContainerExhibitionsId = `#info-container-exhibitions`
+    var infoContainerPublicationsId = `#info-container-publications`
+    var infoContainerClientId = `#info-container-client`
+    var infoContainerStudiesId = `#info-container-studies`
+
+    var infoHeadlineExhibitionsId = `#info-headline-exhibitions`
+    var infoTextExhibitionsId = `#info-text-exhibitions`
+
+    var infoHeadlineClientsId = `#info-headline-client`
+    var infoTextClientsId = `#info-text-client`
+
+    var infoHeadlinePublicationsId = `#info-headline-publications`
+    var infoTextPublicationsId = `#info-text-publications`
+
+    var infoHeadlineStudiesId = `#info-headline-studies`
+    var infoTextStudiesId = `#info-text-studies`
+
+    // $(infoContainerTopId).addClass( "accordion-container" )
+    // $(infoContainerBotId).addClass( "accordion-container" )
+
+    // $(infoContainerExhibitionsId).addClass("ac")
+    // $(infoContainerPublicationsId).addClass("ac")
+    // $(infoContainerClientId).addClass("ac")
+    // $(infoContainerStudiesId).addClass("ac")
+
+    $(infoHeadlineExhibitionsId).wrap(`<button class="info-accordion info-accordion-active"></button>`)
+    $(infoHeadlineClientsId).wrap(`<button class="info-accordion info-accordion-active"></button>`)
+    $(infoHeadlinePublicationsId).wrap(`<button class="info-accordion"></button>`)
+    $(infoHeadlineStudiesId).wrap(`<button class="info-accordion"></button>`)
+
+    $(infoTextExhibitionsId).wrap(`<div class="info-panel" style="display: block;"></div>`)
+    $(infoTextClientsId).wrap(`<div class="info-panel" style="display: block;"></div>`)
+    $(infoTextPublicationsId).wrap(`<div class="info-panel"></div>`)
+    $(infoTextStudiesId).wrap(`<div class="info-panel"></div>`)
+
+
+    function addAccordionFunction() {
+        var acc = $(".info-accordion");
+
+        function interactive() {
+        for(let i = 0; i < acc.length; i++){
+            $(acc[i]).toggleClass("info-accordion-active");
+
+            var panel = $(acc[i]).next();
+            if (panel.css("display") === "block") {
+                panel.css("display", "none")
+            } else {
+                panel.css("display", "block")
+            }
+        }
+
+        }
+
+        $(acc[0]).click(function() {
+            interactive()
+        })
+        $(acc[1]).click(function() {
+            interactive()
+        })
+        $(acc[2]).click(function() {
+            interactive()
+        })
+        $(acc[3]).click(function() {
+            interactive()
+        })
+
+    }
+    addAccordionFunction()
+
+}
+
+var randomImg = function(minW, maxW, minH, maxH) {
+
+    function getImageSize(minW, maxW, minH, maxH) {
+
+        function getRandomBetween(min, max) {
+            return Math.round( (Math.random() * (max - min + 1) + min) )
+        }
+
+        var calcWidth = getRandomBetween(minW, maxW);
+        var calcHeight = getRandomBetween(minH, maxH);
+
+        return {
+            width: calcWidth,
+            height: calcHeight,
+        }
+    }
+
+    $(".info-image-one").css({
+        "width": getImageSize(minW, maxW, minH, maxH).width + "%",
+        "height": getImageSize(minW, maxW, minH, maxH).height + "%"
+    })
+    $(".info-image-two").css({
+        "width": getImageSize(minW, maxW, minH, maxH).width + "%",
+        "height": getImageSize(minW, maxW, minH, maxH).height + "%"
+    })
+
 }
