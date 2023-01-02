@@ -24,54 +24,6 @@ var getCommissionedData = function(v){
 /* DATABASE FOR COMMISSIONED */ 
 var databaseCom = [];
 
-// var addContent = function(){
-//     databaseCom.forEach((v, i) => {
-
-//         /* START DOM ELEMENTE & SELECTORS */
-//         var sectionDiv = `<section id="com-section-${i}" class="com-section"></section>`;
-//         var sectionId = `#com-section-${i}`
-//         var sectionClass = ".com-section";
-
-//         var containerImageDiv = `<div id="com-container-image-${i}" class="com-container-image"></div>`;
-//         var containerImageId = `#com-container-image-${i}`;
-//         var containerImageClass = ".com-container-image";
-
-//         var containerTextDiv = `<div id="com-container-text-${i}" class="com-container-text"></div>`;
-//         var containerTextId = `#com-container-text-${i}`;
-//         var containerTextClass = ".com-container-text";
-
-//         var textDescriptionDiv = `<div id="com-text-description-${i}" class="com-text-description"></div>`;
-//         var textDescriptionId = `#com-text-description-${i}`;
-//         var textDescriptionClass = ".com-text-description";
-
-//         var textDetailsDiv = `<div id="com-text-details-${i}" class="com-text-details"></div>`;
-//         var textDetailsId = `#com-text-details-${i}`;
-//         var textDetailsClass = ".com-text-details";
-//         /* END DOM ELEMENTE & SELECTORS */
-
-//         /* START ADD CONTENT TO DOM */
-//         $("body").append(sectionDiv);
-//         $(sectionId).append(containerImageDiv);
-
-//         for(let x = 0; x < v.images.data.length; x++){
-//             /* START DOM ELEMENTE & SELECTORS */
-//             var imageClass = `com-image`;
-//             var imageId = `com-image-${x}`;
-//             /* END DOM ELEMENTE & SELECTORS */
-
-//             $( containerImageId ).append($(`<img>`, { 
-//                 src: "https://louise-mertens-cms.kolbgrafik.de/" + v.images.data[x].attributes.url,
-//             }).addClass(imageClass).attr("id", imageId));
-//         }
-//         $(sectionId).append(containerTextDiv);
-//         $(containerTextId).append(textDescriptionDiv);
-//         $(textDescriptionId).append(v.description);
-//         $(containerTextId).append(textDetailsDiv);
-//         $(textDetailsId).append(v.details);
-//         /* END ADD CONTENT TO DOM */
-//     })
-// }
-
 var addContent = function(){
     var masterContainerDiv = `<div id="com-master-container"> </div>`;
     var masterContainerId = `#com-master-container`;
@@ -151,22 +103,21 @@ var addContent = function(){
 }
 
 var initSlideshow = function() {
-    document.addEventListener( 'DOMContentLoaded', function() {
-        var splide = new Splide( '.splide', {});
-        splide.mount();
-    });
 
-    var elms = document.getElementsByClassName( 'splide' );
-    for ( var i = 0; i < elms.length; i++ ) {
-        new Splide( elms[ i ] ).mount();
-    }
+    $().ready(function() {
+        var elms = $(".splide");
+        for ( var i = 0; i < elms.length; i++ ) {
+            new Splide( elms[ i ], {
+                pagination: false,
+                type: 'loop',
+                clones: 0,
+            } ).mount();
+        }
+    })
 
-    Splide.defaults = {
-        type: 'loop',
-        pagination: false,
-    }
 }
 
+// OLD
 var wrapperScrollSnap = function() {
     $("body").wrapInner(`<div class="com-scroll-snap"></div>`);
     $(".com-scroll-snap").css("height", "100vh");

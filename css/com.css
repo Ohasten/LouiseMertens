@@ -6,7 +6,6 @@
 }
 
 .com-master {
-    width: 45vw;
     height: 100%;
 }
 
@@ -22,10 +21,6 @@
 }
 
 .com-container-text {
-    background-color: bisque;
-
-    width: 50vw;
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,16 +28,19 @@
     padding-left: var(--spacing-size-m);
 
     margin: auto 0 auto 0;
+
+    font-size: var(--font-size-xl);
+    padding-top: 15vh;
 }
 
 .com-text-description {
-    background-color: aquamarine;
     width: 30%;
 }
-
+/* 
 .com-text-details {
-    background-color: violet;
-}
+
+} */
+
 
 /* SPLIDE */
 .splide__arrows {

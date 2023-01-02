@@ -1,20 +1,30 @@
+import { randomInfo } from "./info.mjs";
+import { randomArt } from "./art.mjs";
+
 export function navMain() {
     setNavStartDefault();
 
     getCurrentView()
     logicHideShowContainerClick();
     hideNavCurrent();
+
+    getBackToTop()
+    getNewImagesInfo()
+    getNewImagesArt()
 }
 
 var artMasterId = "#art-master-container";
 var comMasterId = "#com-master-container";
 var infoMasterId = "#info-master-container";
 
+var navMaster = ".nav-master"
+
 var navLouise = "#nav-louise";
 var navArt = "#nav-art";
 var navCom = "#nav-com";
 var navDiary = "#nav-diary";
 var navCata = "#nav-cata";
+var navBack = "#nav-back";
 
 var navEl = ["#nav-louise", "#nav-art", "#nav-com", "#nav-cata"];
 
@@ -101,14 +111,14 @@ var hideNavCurrent = function() {
 
     $(navLouise).click(function(){
         if($(navLouise).text() === "Louise Mertens"){
-            console.log("1")
+
             $(navCom).removeClass(off)
             $(navArt).removeClass(off)
             // $(navCata).removeClass(off)
         }
         
         if($(navLouise).text() === "Close"){
-            console.log("2")
+
             switch(sessionStorage.getItem("view")){
                 case "art": $(navArt).toggleClass(off); break;
                 case "com": $(navCom).toggleClass(off); break;
@@ -143,8 +153,45 @@ var hideNavCurrent = function() {
     });
 
 }
-var hideInfo = function() {
-    $(navLouise).click(function(){
+var getBackToTop = function() {
 
+    navEl.forEach(el => {
+        $(el).click(function(){
+            if($(navLouise).text() === "Close"){
+                $(navBack).addClass(off)
+            } else if($(navLouise).text() === "Louise Mertens" && $(document).scrollTop() < 40 ){
+                $(navBack).addClass(off)
+            }else {
+                $(navBack).removeClass(off)
+            }
+        })
+    });
+
+    $(document).scroll(function(){
+        if ($(document).scrollTop() > 40) {
+            $(navBack).removeClass(off)
+        } else {
+            $(navBack).addClass(off)
+        }
+    })
+
+    function toTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    $(navBack).click(function(){ toTop() })
+
+}
+var getNewImagesInfo = function() {
+
+    $(navLouise).click(function(){
+        randomInfo()
+    })
+}
+
+var getNewImagesArt = function() {
+    $(navArt).click(function(){
+        randomArt();
     })
 }

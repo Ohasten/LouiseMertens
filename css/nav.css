@@ -1,12 +1,14 @@
 .nav-master {
     height: 100vh;
-    width: 5vw;
-    background-color: red;
+    width: 3vw;
+    background-color: white;
 
     position: fixed;
     right: 0;
 
     padding-top: 5vh;
+
+    font-size: var(--font-size-s);
 }
 
 .nav-container {
@@ -22,14 +24,17 @@
     margin: 0 auto;
 }
 
+.nav-element::selection, #nav-diary > a::selection {
+    background: none;
+}
+
 .nav-off {
     opacity: 0;
     pointer-events: none;
 }
 
-
 #nav-louise {
-    height: 14ch;
+    height: 16ch;
 }
 
 #nav-cata {
