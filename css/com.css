@@ -6,7 +6,6 @@
 }
 
 .com-master {
-    width: 45vw;
     height: 100%;
 }
 
@@ -19,13 +18,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: none;
 }
 
 .com-container-text {
-    background-color: bisque;
-
-    width: 50vw;
-
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,16 +29,15 @@
     padding-left: var(--spacing-size-m);
 
     margin: auto 0 auto 0;
+
+    font-size: var(--font-size-s);
+    padding-top: 10vh;
 }
 
 .com-text-description {
-    background-color: aquamarine;
     width: 30%;
 }
 
-.com-text-details {
-    background-color: violet;
-}
 
 /* SPLIDE */
 .splide__arrows {
@@ -62,9 +57,9 @@
 }
 
 .splide__arrow--next:hover {
-    cursor: e-resize;
+    cursor: url(/svg/right.svg) , e-resize;
 }
 
 .splide__arrow--prev:hover {
-    cursor: w-resize;
+    cursor: url(/svg/left.svg) , w-resize;
 }
