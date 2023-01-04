@@ -1,5 +1,4 @@
 #info-container {
-    width: 95vw;
     height: 100vh;
     position: fixed;
 
@@ -9,39 +8,99 @@
 }
 
 #info-image-container {
-    width: 45vw;
     height: 100vh;
-
-    background-color: aqua;
 }
 
-.info-image-one {
+.info-image-divider-container {
     width: 100%;
-    height: 20%;
+    height: 50%;
 
+    display: flex;
+}
+
+.info-image-one, .info-image-two {
     object-fit: cover;
 }
-.info-image-two {
-    width: 100%;
-    height: 20%;
 
-    object-fit: cover;
+.info-image-one{
+    margin: 0 0 0 auto;
+    width: 85%;
+    height: 50vh;
+}
+
+.info-image-two  {
+    margin: 0 0 0 30%;
+
+    width: 50%;
+    height: 50vh;
 }
 
 #info-text-container {
-    width: 50vw;
+    padding: var(--spacing-size-s);
+
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    padding: var(--spacing-size-m);
+    padding-right: 0;
 }
 
-#info-facts-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+#info-text-description{
+    max-width: 400px;
 }
 
 #info-container-top {
-    display: flex;
+    margin-bottom: var(--spacing-size-m);
 }
 
-#info-container-bot {
+#info-container-top, #info-container-bot {
+    width: 100%;
     display: flex;
+
+    justify-content: space-between;
+}
+
+#info-container-exhibitions, #info-container-client, #info-container-publications, #info-container-studies {
+    width: 50%;
+}
+
+#info-headline-exhibitions, #info-headline-client, #info-headline-publications, #info-headline-studies {
+    margin-bottom: var(--spacing-size-s);
+    text-decoration: underline;
+}
+
+/* ACCORDION */
+
+.info-accordion {
+    background-color: transparent;
+
+    padding-top: var(--spacing-size-s);
+    padding-bottom: var(--spacing-size-s);
+    padding-right: var(--spacing-size-l);
+
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-accordion:after {
+    content: '\002B'; /* Unicode character for "plus" sign (+) */
+}
+
+.info-accordion-active:after {
+    content: "\002D"; /* Unicode character for "minus" sign (-) */
+}
+
+.info-accordion-active, .info-accordion:hover {
+    background-color: transparent;
+}
+
+.info-panel {
+    background-color: transparent;
+    display: none;
+    overflow: hidden;
 }
