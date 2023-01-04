@@ -1,17 +1,16 @@
+#art-master-container {
+    overflow-x: hidden; 
+}
 
 #art-container {
     display: flex;
 }
 
 #art-left-master {
-    width: 45vw;
-    background-color: red;
+    block-size: fit-content;
 }
 
 #art-right-master {
-    width: 50vw;
-    background-color: aquamarine;
-
     display: flex;
     flex-direction: column;
 }
@@ -25,10 +24,35 @@
     height: 100%;
 
     object-fit: cover;
+    display: none;
+}
+
+.art-right-container-image {
+    margin: 0 auto;
 }
 
 .art-right-image {
     width: 100%;
+    height: 100%;
 
+    object-fit: cover;
     flex: 0 0 auto;
+    display: block;
+
+    opacity: 0;
 }
+
+#art-right-container-image-0 {
+    margin: 0 0 0 auto;
+    width: 85%;
+    height: 50vh;
+}
+
+#art-right-container-image-1 {
+    margin: 0 0 0 30%;
+
+    width: 50%;
+    height: 50vh;
+}
+
+
