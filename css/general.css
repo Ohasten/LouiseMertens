@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Poppins';
+    src: url('/font/Poppins-Regular.ttf') format('truetype');
+}  
+
+
 * {
     margin: 0;
     padding: 0;
@@ -6,15 +12,24 @@
     scrollbar-width: none;
     box-sizing: border-box;
 
-    cursor: cell;
+    cursor: default;
 }
 
-html, body {
-    font-size: 9px;
+*::selection, a::selection {
+    opacity: 1;
+    background: var(--black);
+}
+
+html, body, button {
+    font-size: 10.4px;
     font-family: var(--font);
+    letter-spacing: 0.4px;
 
     text-transform: uppercase;
+
+    -webkit-overflow-scrolling: touch
 }
+
 
 :root {
     /* COLORS */
@@ -30,14 +45,16 @@ html, body {
     --font: 'Poppins', sans-serif;
 
     /* FONT SIZE*/
-    --font-size-s: 0.8rem;
+    --font-size-xs: 0.75rem;
+    --font-size-s: 0.9rem;
     --font-size-m: 1rem;
     --font-size-l: 1.2rem;
+    --font-size-xl: 1.3rem;
 }
 
 a {
     text-decoration: none;
-    color: unset;
+    color: var(--black);
 }
 
 #info-master-container, #com-master-container {
@@ -46,4 +63,23 @@ a {
     visibility: hidden;
     pointer-events: none;
     position: absolute;
+}
+
+/* SIZING */
+#art-container, #info-container, .com-section {
+    width: 97vw;
+}
+#art-left-master, #info-image-container, .com-master {
+    width: 47%;
+}
+#art-right-master, #info-text-container, .com-container-text {
+    width: 53%;
+}
+/* SIZING */
+
+
+.copyright {
+    font-size: 0.75rem;
+    position: absolute;
+    bottom: var(--spacing-size-m)
 }
