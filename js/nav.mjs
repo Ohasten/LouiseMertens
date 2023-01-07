@@ -1,30 +1,39 @@
-export function navMain() {
-    setNavStartDefault();
+import { randomArt } from "./art.mjs";
 
-    getCurrentView()
-    logicHideShowContainerClick();
-    hideNavCurrent();
+export function navMain() {
+    setDefault();
+    initNav();
 }
 
 var artMasterId = "#art-master-container";
 var comMasterId = "#com-master-container";
 var infoMasterId = "#info-master-container";
 
+var masterArr = ["#art-master-container", "#com-master-container", "#info-master-container"]
+
+var navMaster = ".nav-master"
+
 var navLouise = "#nav-louise";
 var navArt = "#nav-art";
 var navCom = "#nav-com";
 var navDiary = "#nav-diary";
 var navCata = "#nav-cata";
+var navBack = "#nav-back";
+var navMail = "#nav-mail"
 
 var navEl = ["#nav-louise", "#nav-art", "#nav-com", "#nav-cata"];
+var navToggleEl = ["#nav-art", "#nav-com", "#nav-cata"];
 
 var off = "nav-off";
+var on = "nav-on";
 
-
-var setNavStartDefault = function() {
+var setDefault = function() {
     /* DEFAULT LOAD */
     sessionStorage.setItem("view", "art");
-    var navDisplay = ["#nav-louise", "#nav-art", "#nav-com", "#nav-diary", "#nav-cata"];
+    sessionStorage.setItem("info", "closed");
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    var navDisplay = ["#nav-louise", "#nav-art", "#nav-com", "#nav-diary", "#nav-mail","#nav-cata"];
     navDisplay.forEach(v => {
         if(v != navArt) {
             $(v).toggleClass(off)
@@ -32,119 +41,159 @@ var setNavStartDefault = function() {
 
     });
 }
-var getCurrentView = function() {
+
+var initNav = function() {
+
+    $(navLouise).click(function(){
+        setPreviousScrollPosition()
+
+        switchContainerTo(infoMasterId)
+        toggleNavEl(this)
+        addCloseBtn(this)
+        btnCloseContainerInfo()
+        resetScroll(this)
+
+        /* IMPORT FUNCTION */
+        // randomInfo();
+    })
 
     $(navArt).click(function(){
-        sessionStorage.setItem("view", "art");
+        setCurrentView("view", "art")
+        switchContainerTo(artMasterId)
+        toggleNavEl(this)
+        addCloseBtn(this)
+        resetScroll(this)
+
+        /* IMPORT FUNCTION */
+        randomArt();
     })
+
     $(navCom).click(function(){
-        sessionStorage.setItem("view", "com");
+        setCurrentView("view", "com")
+        switchContainerTo(comMasterId)
+        toggleNavEl(this)
+        addCloseBtn(this)
+        resetScroll(this)
     })
     $(navCata).click(function(){
         // TBD
     })
 
+    addBackToTopBtn();
+    $(navBack).click(function(){
+        toTop(0)
+    })
+
 }
-var logicHideShowContainerClick = function() {
-    function hideContainer(div, boolean) {
-        if(boolean) {
-            $(div).css({
-                "display": "none",
-                "opacity": "0",
-                "visibility": "hidden",
-                "pointer-events": "none",
-            })
-        } else {
-            $(div).css({
-                "display": "unset",
-                "opacity": "1",
-                "visibility": "visible",
-                "pointer-events": "auto",
-            })
-        }
+
+/* MICRO FUNCTIONS */
+function setCurrentView(heading, value) {
+    sessionStorage.setItem(heading, value);
+}
+var previousScrollPosition;
+function setPreviousScrollPosition() {
+    if(parseInt(getScrollPosition()) > 0) {
+        previousScrollPosition = parseInt(getScrollPosition());
+    } 
+}
+function showContainer(id, boolean) {
+    if(boolean) {
+        $(id).css({
+            "display": "unset",
+            "opacity": "1",
+            "visibility": "visible",
+            "pointer-events": "auto",
+        })
+    } else {
+        $(id).css({
+            "display": "none",
+            "opacity": "0",
+            "visibility": "hidden",
+            "pointer-events": "none",
+        })
     }
+}
+function convertID(el) {
+    return `#${el.id}`
+}
+function getScrollPosition() {
+    var result = $(document).scrollTop()
 
-    $(navLouise).click(function(){
-        switch (sessionStorage.getItem("view")) {
-            case "art": hideContainer(comMasterId, true) ; break;
-            case "com": hideContainer(artMasterId, true) ; break;
+    return result;
+}
+function toTop(int) {
+    document.body.scrollTop = int;
+    document.documentElement.scrollTop = int;
+}
+/* MICRO FUNCTIONS */
+
+function switchContainerTo(destination) {
+    masterArr.forEach(v => {
+        if(v === destination) {
+            showContainer(v, true); 
+        } else {
+            showContainer(v, false);
         }
-    })
-    $(navArt).click(function(){
-        hideContainer(artMasterId, false)
-        hideContainer(infoMasterId, true)
-        hideContainer(comMasterId, true)
-    })
-    $(navCom).click(function(){
-        hideContainer(comMasterId, false)
-        hideContainer(infoMasterId, true)
-        hideContainer(artMasterId, true)
-    })
-    $(navCata).click(function(){
-        //TBD
-    })
-    
-    var canBeClosed = false;
-    navEl.forEach(v => {
-        $(v).click(function(){
-            if(v === navLouise && !canBeClosed) {
-                hideContainer(infoMasterId, false)
-                canBeClosed = true;
-            } else if(canBeClosed) {
-                hideContainer(infoMasterId, true)
-                canBeClosed = false;
-            }
-        })
     });
 }
-var hideNavCurrent = function() {
+function btnCloseContainerInfo() {
+    if($(navLouise).text() === "Louise Mertens +") {
 
-    $(navLouise).click(function(){
-        if($(navLouise).text() === "Louise Mertens"){
-            console.log("1")
-            $(navCom).removeClass(off)
-            $(navArt).removeClass(off)
-            // $(navCata).removeClass(off)
+        var previousView = sessionStorage.getItem("view")
+        var previousViewId = `#${previousView}-master-container`;
+        var previousViewNav = `#nav-${previousView}`
+
+        //TOGGLE CONTAINER
+        showContainer(previousViewId, true);
+        showContainer(infoMasterId, false);
+
+        //RESET NAVBAR
+        $(previousViewNav).addClass(off)
+    }
+}
+function toggleNavEl(x) {
+    var id = convertID(x)
+
+    navToggleEl.forEach(v => {
+        if(v === id) {
+            $(v).addClass(off)
+        } else {
+            $(v).removeClass(off)
+        }        
+    });
+}
+function addCloseBtn(x) {
+    var id = convertID(x)
+
+    $.fn.extend({
+        toggleText: function(a, b){
+            return this.text(this.text() == b ? a : b);
         }
-        
-        if($(navLouise).text() === "Close"){
-            console.log("2")
-            switch(sessionStorage.getItem("view")){
-                case "art": $(navArt).toggleClass(off); break;
-                case "com": $(navCom).toggleClass(off); break;
-            }
-        }
-    })
-    $(navArt).click(function(){
-        $(this).toggleClass(off)
-        $(navCom).removeClass(off)
-
-    })
-    $(navCom).click(function(){
-        $(this).toggleClass(off)
-        $(navArt).removeClass(off)
-
-    })
-    $(navCata).click(function(){
-        // TBD
-    })
-
-    var showCloseNext = true;
-    navEl.forEach(v => {
-        $(v).click(function(){
-            if(v === navLouise && showCloseNext) {
-                $(navLouise).text("Close");
-                showCloseNext = false;
-            } else if(!showCloseNext) {
-                $(navLouise).text("Louise Mertens");
-                showCloseNext = true;
-            }
-        })
     });
 
-}
-var hideInfo = function() {
-    $(navLouise).click(function(){
+    if(id === navLouise) {
+        $(navLouise).toggleText("Louise Mertens +", "Close")
+    } else {
+        $(navLouise).text("Louise Mertens +")
+    }     
 
-    })
+}
+function resetScroll(x) {
+    if($(x).text() === "Louise Mertens +") {
+        var scroll = previousScrollPosition;
+
+        toTop(scroll)
+        previousScrollPosition = 0;
+    } else {
+        toTop(0)
+    }
+}
+function addBackToTopBtn() {
+    $(document).scroll(function(){
+        if ($(document).scrollTop() > 40) {
+            $(navBack).removeClass(off)
+        } else {
+            $(navBack).addClass(off)
+        }
+    })    
 }
